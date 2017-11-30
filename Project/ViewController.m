@@ -11,6 +11,8 @@
 #import "YTPlayerView.h"
 #import <AFNetworking.h>
 #import "Overlay.h"
+@import FirebaseDatabase;
+@import FirebaseAuth;
 
 @interface ViewController ()<YTPlayerViewDelegate, ResumeVideoDelegate>
     
@@ -21,6 +23,8 @@
     @property (strong, nonatomic) NSMutableString *lyrics;
     @property (weak, nonatomic) Overlay *overlay;
     @property (strong, nonatomic) AVAudioSession *session;
+    @property (weak, nonatomic) IBOutlet UIButton *addButton;
+    @property (strong, nonatomic) FIRDatabaseReference *ref;
 
 @end
 
@@ -28,6 +32,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.ref = [[FIRDatabase database] reference];
+    self.navigationController.navigationBarHidden = false;
     self.manualPause = false;
     AppDelegate *appController = [(AppDelegate *)[UIApplication sharedApplication] delegate];
     appController.delegate = self;
@@ -153,5 +159,34 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)addButton:(id)sender {
+    self.addButton.hidden = true;
+    self.navigationItem.backBarButtonItem.enabled = false;
+    NSString *urlString = self.selectedVideo.url;
+    NSString *songID = [[urlString componentsSeparatedByString:@"v="] lastObject];
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://www.googleapis.com/youtube/v3/videos?key=AIzaSyA0pCGmMFkCSswwgh1rHpM2KorjSVvLKYM&part=snippet&id=%@", songID]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+        if (error) {
+            NSLog(error.localizedDescription);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.navigationItem.backBarButtonItem.enabled = true;
+            });
+        } else {
+            NSString *thumbURL = responseObject[@"items"][0][@"snippet"][@"thumbnails"][@"maxres"][@"url"];
+            if (!thumbURL) {
+                thumbURL = responseObject[@"items"][0][@"snippet"][@"thumbnails"][@"default"][@"url"];
+            }
+            FIRDatabaseReference *key = [[[self.ref child:@"users"] child:[[[FIRAuth auth] currentUser] uid]] childByAutoId];
+            [key setValue:@{@"title":self.selectedVideo.title, @"url":self.selectedVideo.url, @"thumbnail":thumbURL}];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.navigationItem.backBarButtonItem.enabled = true;
+            });
+        }
+    }];
+    [dataTask resume];
+}
 
 @end

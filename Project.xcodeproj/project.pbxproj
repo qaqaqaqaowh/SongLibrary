@@ -20,6 +20,7 @@
 		A1A35BCE1FCD5F32000BF375 /* Overlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = A1A35BCD1FCD5F32000BF375 /* Overlay.xib */; };
 		A1A35BD11FCD5F6D000BF375 /* Overlay.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A35BD01FCD5F6D000BF375 /* Overlay.m */; };
 		A1A35BD61FCD713F000BF375 /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A35BD51FCD713F000BF375 /* Video.m */; };
+		A1B3B2351FD0106900BD7028 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1B3B2341FD0106800BD7028 /* SearchViewController.m */; };
 		A1CA93C91FCE80120026A57D /* LibraryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A1CA93C81FCE80120026A57D /* LibraryTableViewCell.m */; };
 		FC0448D78D094C66879E5950 /* libPods-Project.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87BBEB80A761792143741EF2 /* libPods-Project.a */; };
 /* End PBXBuildFile section */
@@ -51,6 +52,8 @@
 		A1A35BD01FCD5F6D000BF375 /* Overlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Overlay.m; sourceTree = "<group>"; };
 		A1A35BD41FCD713F000BF375 /* Video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Video.h; sourceTree = "<group>"; };
 		A1A35BD51FCD713F000BF375 /* Video.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Video.m; sourceTree = "<group>"; };
+		A1B3B2331FD0106800BD7028 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		A1B3B2341FD0106800BD7028 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		A1CA93C71FCE80120026A57D /* LibraryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryTableViewCell.h; sourceTree = "<group>"; };
 		A1CA93C81FCE80120026A57D /* LibraryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LibraryTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -111,6 +114,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		A1B3B2361FD020A900BD7028 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				A1B3B2331FD0106800BD7028 /* SearchViewController.h */,
+				A1B3B2341FD0106800BD7028 /* SearchViewController.m */,
+			);
+			name = Search;
+			sourceTree = "<group>";
+		};
 		A1CA93CA1FCEC1F30026A57D /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
@@ -161,9 +173,10 @@
 		A1CA93CF1FCEC2290026A57D /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				A1CA93CE1FCEC21E0026A57D /* Player */,
-				A1CA93CD1FCEC2130026A57D /* Library */,
 				A1CA93CC1FCEC2080026A57D /* Auth */,
+				A1CA93CD1FCEC2130026A57D /* Library */,
+				A1CA93CE1FCEC21E0026A57D /* Player */,
+				A1B3B2361FD020A900BD7028 /* Search */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -359,6 +372,7 @@
 			files = (
 				A1A35BC41FCD3634000BF375 /* LibraryViewController.m in Sources */,
 				A1A35BD61FCD713F000BF375 /* Video.m in Sources */,
+				A1B3B2351FD0106900BD7028 /* SearchViewController.m in Sources */,
 				A1A35BBC1FCD2A79000BF375 /* SignInViewController.m in Sources */,
 				A1A35BBF1FCD2A81000BF375 /* SignUpViewController.m in Sources */,
 				A14E76871FCBB4CB009AA58B /* ViewController.m in Sources */,

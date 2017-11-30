@@ -9,6 +9,7 @@
 #import "LibraryViewController.h"
 #import "SignInViewController.h"
 #import "LibraryTableViewCell.h"
+#import "SearchViewController.h"
 #import "ViewController.h"
 #import "Overlay.h"
 #import "Video.h"
@@ -44,6 +45,7 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
+    self.navigationController.navigationBarHidden = true;
     NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:true];
     [self.videos sortUsingDescriptors:@[sort]];
     [self.tableView reloadData];
@@ -147,7 +149,7 @@
                     NSString *title = responseObject[@"items"][0][@"snippet"][@"title"];
                     NSString *url = alert.textFields.firstObject.text;
                     if (!thumbURL) {
-                        thumbURL = responseObject[@"items"][0][@"snippet"][@"thumbnails"][@"standard"][@"url"];
+                        thumbURL = responseObject[@"items"][0][@"snippet"][@"thumbnails"][@"default"][@"url"];
                     }
                     FIRDatabaseReference *key = [[[self.ref child:@"users"] child:[[[FIRAuth auth] currentUser] uid]] childByAutoId];
                     [key setValue:@{@"thumbnail":thumbURL, @"title":title, @"url":url}];
@@ -184,6 +186,11 @@
     [alert addAction:confirm];
     [alert addAction:cancel];
     [self presentViewController:alert animated:true completion:nil];
+}
+
+- (IBAction)searchButton:(id)sender {
+    SearchViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SearchViewController"];
+    [self.navigationController pushViewController:vc animated:true];
 }
 
 @end
