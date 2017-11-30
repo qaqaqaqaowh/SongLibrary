@@ -127,30 +127,34 @@
         textField.placeholder = @"https://www.youtube.com/watch?v=xxx";
     }];
     UIAlertAction *save = [UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        self.overlay = [[[NSBundle mainBundle] loadNibNamed:@"Overlay" owner:self options:nil] objectAtIndex:0];
-        [self.overlay setFrame:self.view.frame];
-        [self.view addSubview:self.overlay];
-        NSString *urlString = alert.textFields.firstObject.text;
-        NSString *songID = [[urlString componentsSeparatedByString:@"v="] lastObject];
-        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-        AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://www.googleapis.com/youtube/v3/videos?key=AIzaSyA0pCGmMFkCSswwgh1rHpM2KorjSVvLKYM&part=snippet&id=%@", songID]];
-        NSURLRequest *request = [NSURLRequest requestWithURL:url];
-        NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
-            if (error) {
-                NSLog(error.localizedDescription);
-            } else {
-                NSString *thumbURL = responseObject[@"items"][0][@"snippet"][@"thumbnails"][@"maxres"][@"url"];
-                NSString *title = responseObject[@"items"][0][@"snippet"][@"title"];
-                NSString *url = alert.textFields.firstObject.text;
-                if (!thumbURL) {
-                    thumbURL = responseObject[@"items"][0][@"snippet"][@"thumbnails"][@"standard"][@"url"];
+        NSString *text = alert.textFields[0].text;
+        text = [text stringByReplacingOccurrencesOfString:@" " withString:@""];
+        if (![text isEqualToString:@""]) {
+            self.overlay = [[[NSBundle mainBundle] loadNibNamed:@"Overlay" owner:self options:nil] objectAtIndex:0];
+            [self.overlay setFrame:self.view.frame];
+            [self.view addSubview:self.overlay];
+            NSString *urlString = alert.textFields.firstObject.text;
+            NSString *songID = [[urlString componentsSeparatedByString:@"v="] lastObject];
+            NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+            AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://www.googleapis.com/youtube/v3/videos?key=AIzaSyA0pCGmMFkCSswwgh1rHpM2KorjSVvLKYM&part=snippet&id=%@", songID]];
+            NSURLRequest *request = [NSURLRequest requestWithURL:url];
+            NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+                if (error) {
+                    NSLog(error.localizedDescription);
+                } else {
+                    NSString *thumbURL = responseObject[@"items"][0][@"snippet"][@"thumbnails"][@"maxres"][@"url"];
+                    NSString *title = responseObject[@"items"][0][@"snippet"][@"title"];
+                    NSString *url = alert.textFields.firstObject.text;
+                    if (!thumbURL) {
+                        thumbURL = responseObject[@"items"][0][@"snippet"][@"thumbnails"][@"standard"][@"url"];
+                    }
+                    FIRDatabaseReference *key = [[[self.ref child:@"users"] child:[[[FIRAuth auth] currentUser] uid]] childByAutoId];
+                    [key setValue:@{@"thumbnail":thumbURL, @"title":title, @"url":url}];
                 }
-                FIRDatabaseReference *key = [[[self.ref child:@"users"] child:[[[FIRAuth auth] currentUser] uid]] childByAutoId];
-                [key setValue:@{@"thumbnail":thumbURL, @"title":title, @"url":url}];
-            }
-        }];
-        [dataTask resume];
+            }];
+            [dataTask resume];
+        }
     }];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
     [alert addAction:save];
