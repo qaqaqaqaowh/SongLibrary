@@ -96,11 +96,18 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     LibraryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    CGFloat hue = 0;
+    CGFloat saturation = 0;
+    CGFloat brightness = 0;
+    [self.tableView.backgroundColor getHue:&hue saturation:&saturation brightness:&brightness alpha:nil];
+    brightness = brightness + (indexPath.row * 0.005);
+    UIColor *background = [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
     Video *selectedVideo = self.videos[indexPath.row];
     cell.textLabel.text = selectedVideo.title;
     cell.imageView.image = selectedVideo.thumbnail;
     cell.video = selectedVideo;
     cell.delegate = self;
+    cell.backgroundColor = background;
     return cell;
 }
 

@@ -13,6 +13,7 @@
 @interface ViewController : UIViewController
 
 @property (weak, nonatomic) Video *selectedVideo;
+@property (assign, nonatomic) Boolean manualPause;
 
 @end
 

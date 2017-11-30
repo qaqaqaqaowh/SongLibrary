@@ -22,8 +22,8 @@
 -(void)awakeFromNib {
     [super awakeFromNib];
     [self.loadView startAnimating];
-    self.userInteractionEnabled = false;
-    self.loadView.userInteractionEnabled = false;
+    self.userInteractionEnabled = YES;
+    self.loadView.userInteractionEnabled = YES;
 }
 
 @end

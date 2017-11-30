@@ -28,6 +28,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.manualPause = false;
     AppDelegate *appController = [(AppDelegate *)[UIApplication sharedApplication] delegate];
     appController.delegate = self;
     self.session = [AVAudioSession sharedInstance];
@@ -51,6 +52,7 @@
         [self.session setActive:true error:&setStateError];
         self.playButton.enabled = false;
         self.pauseButton.enabled = true;
+        self.manualPause = false;
         break;
         
         case kYTPlayerStatePaused:
@@ -70,7 +72,9 @@
 }
 
 -(void)resumeVideo {
-    [self.playerView playVideo];
+    if (!self.manualPause) {
+        [self.playerView playVideo];
+    }
 }
     
 -(void)getSongTitle {
@@ -141,6 +145,7 @@
     
 - (IBAction)pauseButton:(id)sender {
     [self.playerView pauseVideo];
+    self.manualPause = true;
 }
 
 - (void)didReceiveMemoryWarning {
