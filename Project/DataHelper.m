@@ -12,10 +12,6 @@
 
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
-@property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-
-@property (nonatomic, strong) NSManagedObjectModel *managedObjectModel;
-
 @end
 
 @implementation DataHelper
@@ -28,15 +24,6 @@
         sharedInstance = [[DataHelper alloc] init];
     });
     return sharedInstance;
-}
-
--(NSManagedObjectModel *)managedObjectModel {
-    if (_managedObjectModel) {
-        return _managedObjectModel;
-    }
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"VidURL" withExtension:@"momd"];
-    _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
-    return _managedObjectModel;
 }
 
 - (NSPersistentContainer *)persistentContainer {
@@ -82,20 +69,6 @@
 
 -(NSManagedObjectContext *) managedObjectContext {
     return [[self persistentContainer] viewContext];
-}
-
--(NSPersistentStoreCoordinator *)persistentStoreCoordinator {
-    if (_persistentStoreCoordinator) {
-        return _persistentStoreCoordinator;
-    }
-    NSURL *storeURL = [[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject] URLByAppendingPathComponent:@"VidURL.sqlite"];
-    NSDictionary *options = @{NSMigratePersistentStoresAutomaticallyOption: @YES, NSInferMappingModelAutomaticallyOption: @YES};
-    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:_managedObjectModel];
-    NSError *error;
-    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
-        abort();
-    }
-    return _persistentStoreCoordinator;
 }
 
 @end

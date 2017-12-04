@@ -107,8 +107,6 @@
 				A1CA93D21FCEC2960026A57D /* Misc */,
 				A14E76821FCBB4CB009AA58B /* AppDelegate.h */,
 				A14E76831FCBB4CB009AA58B /* AppDelegate.m */,
-				A180C6BD1FD4FF3500A81506 /* VidURL+CoreDataProperties.h */,
-				A180C6BE1FD4FF3500A81506 /* VidURL+CoreDataProperties.m */,
 				A180C69F1FD4ECBD00A81506 /* DataHelper.h */,
 				A180C6A01FD4ECBD00A81506 /* DataHelper.m */,
 				A14E76881FCBB4CB009AA58B /* Main.storyboard */,
@@ -128,6 +126,15 @@
 				A14E76801FCBB4CB009AA58B /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A180C6C41FD528BA00A81506 /* VideoURL */ = {
+			isa = PBXGroup;
+			children = (
+				A180C6BD1FD4FF3500A81506 /* VidURL+CoreDataProperties.h */,
+				A180C6BE1FD4FF3500A81506 /* VidURL+CoreDataProperties.m */,
+			);
+			name = VideoURL;
 			sourceTree = "<group>";
 		};
 		A1B3B2361FD020A900BD7028 /* Search */ = {
@@ -209,6 +216,7 @@
 		A1CA93D11FCEC2620026A57D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				A180C6C41FD528BA00A81506 /* VideoURL */,
 				A1CA93D01FCEC25B0026A57D /* Video */,
 			);
 			name = Models;

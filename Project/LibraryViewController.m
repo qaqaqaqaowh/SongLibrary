@@ -60,10 +60,12 @@
 }
 
 -(void)fetchDatabase {
+    dispatch_group_t group = dispatch_group_create();
     [[[[self.ref child:@"users"] child:[[[FIRAuth auth] currentUser] uid]] queryOrderedByChild:@"title"] observeEventType:FIRDataEventTypeChildAdded withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
         NSDictionary *dictionary = snapshot.value;
         NSURL *url = [[NSURL alloc] initWithString:dictionary[@"thumbnail"]];
         NSURLSession *manager = [NSURLSession sharedSession];
+        dispatch_group_enter(group);
         NSURLSessionDataTask *dataTask = [manager dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
             if (error) {
                 NSLog(error.localizedDescription);
@@ -73,6 +75,7 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.videos addObject:newVideo];
                     [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.videos.count - 1 inSection:0]] withRowAnimation:UITableViewRowAnimationRight];
+                    dispatch_group_leave(group);
                     [self.overlay removeFromSuperview];
                     NSEntityDescription *desc = [NSEntityDescription entityForName:@"VidURL" inManagedObjectContext:[[DataHelper shared] managedObjectContext]];
                     VidURL *newURL = [[VidURL alloc] initWithEntity:desc insertIntoManagedObjectContext:[[DataHelper shared] managedObjectContext]];
@@ -83,6 +86,11 @@
         }];
         [dataTask resume];
     }];
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:true];
+        [self.videos sortUsingDescriptors:@[sort]];
+        [self.tableView reloadData];
+    });
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -191,8 +199,20 @@
         [self.view addSubview:self.overlay];
         for (int i = 0; i < self.videos.count; i++) {
             if ([self.videos[i].uid isEqualToString:uid]) {
+                Video *selectedVideo = self.videos[i];
+                NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+                NSEntityDescription *entity = [NSEntityDescription entityForName:@"VidURL" inManagedObjectContext:[[DataHelper shared] managedObjectContext]];
+                [fetchRequest setEntity:entity];
+                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"string == %@", selectedVideo.url];
+                [fetchRequest setPredicate:predicate];
+                NSError *error = nil;
+                NSArray *fetchedObjects = [[[DataHelper shared] managedObjectContext] executeFetchRequest:fetchRequest error:&error];
+                for (int i = 0; i < fetchedObjects.count; i++) {
+                    [[[DataHelper shared] managedObjectContext] deleteObject:fetchedObjects[i]];
+                }
+                [[DataHelper shared] saveContext];
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [[[[self.ref child:@"users"] child:[[[FIRAuth auth] currentUser] uid]] child:uid] setValue:nil];	
+                    [[[[self.ref child:@"users"] child:[[[FIRAuth auth] currentUser] uid]] child:uid] setValue:nil];
                     [self.videos removeObjectAtIndex:i];
                     [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:i inSection:0]] withRowAnimation:UITableViewRowAnimationRight];
                     [self.overlay removeFromSuperview];
