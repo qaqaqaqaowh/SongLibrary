@@ -11,6 +11,9 @@
 #import "YTPlayerView.h"
 #import <AFNetworking.h>
 #import "Overlay.h"
+#import "VidURL+CoreDataClass.h"
+#import "DataHelper.h"
+@import CoreData;
 @import FirebaseDatabase;
 @import FirebaseAuth;
 
@@ -32,6 +35,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self fetchURLs];
     self.ref = [[FIRDatabase database] reference];
     self.navigationController.navigationBarHidden = false;
     self.manualPause = false;
@@ -49,6 +53,20 @@
     [self.overlay setFrame:self.view.frame];
     [self.view addSubview:self.overlay];
     // Do any additional setup after loading the view, typically from a nib.
+}
+
+-(void)fetchURLs {
+    NSError *error = nil;
+    NSFetchRequest *URLRequest = [NSFetchRequest fetchRequestWithEntityName:@"VidURL"];
+    NSArray<VidURL *> *fetchedURL = [[[DataHelper shared] managedObjectContext] executeFetchRequest:URLRequest error:&error];
+    if (error) {
+        abort();
+    }
+    for (int i = 0; i < fetchedURL.count; i++) {
+        if ([fetchedURL[i].string isEqualToString:self.selectedVideo.url]) {
+            self.addButton.hidden = true;
+        }
+    }
 }
     
 -(void)playerView:(YTPlayerView *)playerView didChangeToState:(YTPlayerState)state {

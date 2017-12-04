@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "LibraryViewController.h"
 #import "SignInViewController.h"
+#import "DataHelper.h"
 @import Firebase;
 @import FirebaseAuth;
 
@@ -62,6 +63,7 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    [[[DataHelper shared] managedObjectContext] deletedObjects];
 }
 
 

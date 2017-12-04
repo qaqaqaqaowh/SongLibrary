@@ -13,6 +13,10 @@
 		A14E768A1FCBB4CB009AA58B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A14E76881FCBB4CB009AA58B /* Main.storyboard */; };
 		A14E768C1FCBB4CB009AA58B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A14E768B1FCBB4CB009AA58B /* Assets.xcassets */; };
 		A14E768F1FCBB4CB009AA58B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A14E768D1FCBB4CB009AA58B /* LaunchScreen.storyboard */; };
+		A180C6751FD4E67400A81506 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A180C6741FD4E67400A81506 /* CoreData.framework */; };
+		A180C6781FD4E70300A81506 /* VidURL.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A180C6761FD4E70300A81506 /* VidURL.xcdatamodeld */; };
+		A180C6A11FD4ECBD00A81506 /* DataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A180C6A01FD4ECBD00A81506 /* DataHelper.m */; };
+		A180C6C01FD4FF3500A81506 /* VidURL+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A180C6BE1FD4FF3500A81506 /* VidURL+CoreDataProperties.m */; };
 		A1A35BBC1FCD2A79000BF375 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A35BBB1FCD2A79000BF375 /* SignInViewController.m */; };
 		A1A35BBF1FCD2A81000BF375 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A35BBE1FCD2A81000BF375 /* SignUpViewController.m */; };
 		A1A35BC11FCD2C92000BF375 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A1A35BC01FCD2C92000BF375 /* GoogleService-Info.plist */; };
@@ -40,6 +44,12 @@
 		A14E768E1FCBB4CB009AA58B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A14E76901FCBB4CB009AA58B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A14E76961FCC0432009AA58B /* libAFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAFNetworking.a; path = "../../../Library/Developer/Xcode/DerivedData/Project-deloovqaubyfiadwlvdniihbsyka/Build/Products/Debug-iphonesimulator/AFNetworking/libAFNetworking.a"; sourceTree = "<group>"; };
+		A180C6741FD4E67400A81506 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		A180C6771FD4E70300A81506 /* VidURL.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VidURL.xcdatamodel; sourceTree = "<group>"; };
+		A180C69F1FD4ECBD00A81506 /* DataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataHelper.h; sourceTree = "<group>"; };
+		A180C6A01FD4ECBD00A81506 /* DataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataHelper.m; sourceTree = "<group>"; };
+		A180C6BD1FD4FF3500A81506 /* VidURL+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VidURL+CoreDataProperties.h"; sourceTree = "<group>"; };
+		A180C6BE1FD4FF3500A81506 /* VidURL+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "VidURL+CoreDataProperties.m"; sourceTree = "<group>"; };
 		A1A35BBA1FCD2A79000BF375 /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
 		A1A35BBB1FCD2A79000BF375 /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
 		A1A35BBD1FCD2A81000BF375 /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
@@ -63,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A180C6751FD4E67400A81506 /* CoreData.framework in Frameworks */,
 				FC0448D78D094C66879E5950 /* libPods-Project.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -96,9 +107,14 @@
 				A1CA93D21FCEC2960026A57D /* Misc */,
 				A14E76821FCBB4CB009AA58B /* AppDelegate.h */,
 				A14E76831FCBB4CB009AA58B /* AppDelegate.m */,
+				A180C6BD1FD4FF3500A81506 /* VidURL+CoreDataProperties.h */,
+				A180C6BE1FD4FF3500A81506 /* VidURL+CoreDataProperties.m */,
+				A180C69F1FD4ECBD00A81506 /* DataHelper.h */,
+				A180C6A01FD4ECBD00A81506 /* DataHelper.m */,
 				A14E76881FCBB4CB009AA58B /* Main.storyboard */,
 				A14E768B1FCBB4CB009AA58B /* Assets.xcassets */,
 				A14E768D1FCBB4CB009AA58B /* LaunchScreen.storyboard */,
+				A180C6761FD4E70300A81506 /* VidURL.xcdatamodeld */,
 				A14E76901FCBB4CB009AA58B /* Info.plist */,
 				A1A35BC01FCD2C92000BF375 /* GoogleService-Info.plist */,
 				A14E767F1FCBB4CB009AA58B /* Supporting Files */,
@@ -219,6 +235,7 @@
 		F28274F0D99F0C6485FEF96A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A180C6741FD4E67400A81506 /* CoreData.framework */,
 				A14E76961FCC0432009AA58B /* libAFNetworking.a */,
 				87BBEB80A761792143741EF2 /* libPods-Project.a */,
 			);
@@ -371,6 +388,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1A35BC41FCD3634000BF375 /* LibraryViewController.m in Sources */,
+				A180C6781FD4E70300A81506 /* VidURL.xcdatamodeld in Sources */,
 				A1A35BD61FCD713F000BF375 /* Video.m in Sources */,
 				A1B3B2351FD0106900BD7028 /* SearchViewController.m in Sources */,
 				A1A35BBC1FCD2A79000BF375 /* SignInViewController.m in Sources */,
@@ -378,8 +396,10 @@
 				A14E76871FCBB4CB009AA58B /* ViewController.m in Sources */,
 				A14E76841FCBB4CB009AA58B /* AppDelegate.m in Sources */,
 				A1A35BD11FCD5F6D000BF375 /* Overlay.m in Sources */,
+				A180C6A11FD4ECBD00A81506 /* DataHelper.m in Sources */,
 				A14E76811FCBB4CB009AA58B /* main.m in Sources */,
 				A1CA93C91FCE80120026A57D /* LibraryTableViewCell.m in Sources */,
+				A180C6C01FD4FF3500A81506 /* VidURL+CoreDataProperties.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -503,6 +523,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = asd.Project;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Project/Project-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
@@ -518,6 +539,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = asd.Project;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Project/Project-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -544,6 +566,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		A180C6761FD4E70300A81506 /* VidURL.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A180C6771FD4E70300A81506 /* VidURL.xcdatamodel */,
+			);
+			currentVersion = A180C6771FD4E70300A81506 /* VidURL.xcdatamodel */;
+			path = VidURL.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = A14E76741FCBB4CA009AA58B /* Project object */;
 }

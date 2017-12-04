@@ -14,6 +14,9 @@
 #import "Overlay.h"
 #import "Video.h"
 #import <AFNetworking.h>
+#import "DataHelper.h"
+#import "VidURL+CoreDataClass.h"
+@import CoreData;
 @import FirebaseAuth;
 @import FirebaseDatabase;
 
@@ -71,6 +74,10 @@
                     [self.videos addObject:newVideo];
                     [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.videos.count - 1 inSection:0]] withRowAnimation:UITableViewRowAnimationRight];
                     [self.overlay removeFromSuperview];
+                    NSEntityDescription *desc = [NSEntityDescription entityForName:@"VidURL" inManagedObjectContext:[[DataHelper shared] managedObjectContext]];
+                    VidURL *newURL = [[VidURL alloc] initWithEntity:desc insertIntoManagedObjectContext:[[DataHelper shared] managedObjectContext]];
+                    newURL.string = newVideo.url;
+                    [[DataHelper shared] saveContext];
                 });
             }
         }];
@@ -90,6 +97,8 @@
     [[FIRAuth auth] signOut:&error];
     SignInViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SignInViewController"];
     self.navigationController.viewControllers = @[vc];
+    [[[DataHelper shared] managedObjectContext] deletedObjects];
+    [[DataHelper shared] saveContext];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -131,7 +140,17 @@
     UIAlertAction *save = [UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSString *text = alert.textFields[0].text;
         text = [text stringByReplacingOccurrencesOfString:@" " withString:@""];
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"VidURL" inManagedObjectContext:[[DataHelper shared] managedObjectContext]];
+        [fetchRequest setEntity:entity];
+        NSError *error = nil;
+        NSArray<VidURL *> *fetchedObjects = [[[DataHelper shared] managedObjectContext] executeFetchRequest:fetchRequest error:&error];
         if (![text isEqualToString:@""]) {
+            for (int i = 0; i < fetchedObjects.count; i++) {
+                if ([fetchedObjects[i].string isEqualToString:text]) {
+                    return;
+                }
+            }
             self.overlay = [[[NSBundle mainBundle] loadNibNamed:@"Overlay" owner:self options:nil] objectAtIndex:0];
             [self.overlay setFrame:self.view.frame];
             [self.view addSubview:self.overlay];
