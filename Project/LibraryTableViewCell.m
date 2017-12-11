@@ -13,7 +13,6 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    self.ref = [[FIRDatabase database] reference];
     UILongPressGestureRecognizer *press = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressAction:)];
     press.minimumPressDuration = 1;
     press.numberOfTouchesRequired = 1;
@@ -29,7 +28,6 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
     // Configure the view for the selected state
 }
 

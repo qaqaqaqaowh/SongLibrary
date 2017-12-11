@@ -36,6 +36,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+//    [self postRequestTest];
     self.videos = [[NSMutableArray alloc]init];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -46,6 +47,14 @@
     [self fetchDatabase];
     // Do any additional setup after loading the view.
 }
+
+//-(void)postRequestTest {
+//    NSError *error;
+//    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"post" URLString:@"https://database-ios.herokuapp.com/users" parameters:@{@"email":@"nicholasowh@hotmail.com",@"password":@"asdasdasd",@"name":@"Nicholas Ong Wei Harn"} error:&error];
+//    NSURLSession *manager = [NSURLSession sharedSession];
+//    NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request];
+//    [dataTask resume];
+//}
 
 -(void)viewWillAppear:(BOOL)animated {
     self.navigationController.navigationBarHidden = true;
@@ -168,6 +177,7 @@
             AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
             NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://www.googleapis.com/youtube/v3/videos?key=AIzaSyA0pCGmMFkCSswwgh1rHpM2KorjSVvLKYM&part=snippet&id=%@", songID]];
             NSURLRequest *request = [NSURLRequest requestWithURL:url];
+            NSMutableURLRequest *someRequest = [NSMutableURLRequest requestWithURL:url];
             NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
                 if (error) {
                     NSLog(error.localizedDescription);

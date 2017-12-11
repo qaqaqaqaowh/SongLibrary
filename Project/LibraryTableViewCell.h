@@ -23,6 +23,4 @@
 
 @property (strong, nonatomic) Video *video;
 
-@property (strong, nonatomic) FIRDatabaseReference *ref;
-
 @end

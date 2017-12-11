@@ -66,6 +66,7 @@
 }
 
 - (IBAction)searchButton:(id)sender {
+    self.videos = [[NSMutableArray alloc] init];
     self.overlay = [[[NSBundle mainBundle] loadNibNamed:@"Overlay" owner:self options:nil] objectAtIndex:0];
     [self.overlay setFrame:self.view.frame];
     [self.view addSubview:self.overlay];
@@ -98,7 +99,6 @@
                         Video *newVideo = [[Video alloc] initWithTitle:title withThumbnail:image withURL:url withUID:@"UID"];
                         dispatch_async(dispatch_get_main_queue(), ^{
                             [self.videos addObject:newVideo];
-//                            [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.videos.count - 1 inSection:0]] withRowAnimation:UITableViewRowAnimationRight];
                             [self.tableView reloadData];
                             [self.overlay removeFromSuperview];
                         });
